@@ -8,17 +8,40 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+    @EnvironmentObject var viewModel: PlanViewModel
+
+     var body: some View {
+         TabView {
+             NavigationStack {
+                 HomeView()
+             }
+             .tabItem {
+                 Label("Home", systemImage: "house.fill")
+             }
+
+             NavigationStack {
+                 ResultsView()
+             }
+             .tabItem {
+                 Label("Results", systemImage: "list.bullet.clipboard.fill")
+             }
+
+             NavigationStack {
+                 SettingsView()
+             }
+             .tabItem {
+                 Label("Settings", systemImage: "gearshape.fill")
+             }
+         }
+         .accentColor(.terracotta)
+         .font(.body)
+         .background(Color.ivory.edgesIgnoringSafeArea(.all))
+     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(PlanViewModel())
+    }
 }

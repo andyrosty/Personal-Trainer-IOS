@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Personal_TrainerApp: App {
+    @StateObject private var viewModel = PlanViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel)
         }
     }
 }
