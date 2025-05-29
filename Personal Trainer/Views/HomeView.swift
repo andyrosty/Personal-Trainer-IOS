@@ -13,6 +13,23 @@ struct HomeView: View {
 
     var body: some View {
         Form {
+            Section(header: Text("Weekly Meals")
+                                   .font(.headline)
+                                   .foregroundColor(.charcoal)
+            ) {
+                ForEach($viewModel.weeklyMeals) { $daily in
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(daily.day.capitalized)
+                            .font(.subheadline)
+                            .foregroundColor(.charcoal)
+                        
+                        // If your DailyMeal.meals is a String:
+                        TextField("Meals for \(daily.day)", text: $daily.meals)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
             Section(header: Text("Your Details")
                         .font(.headline)
                         .foregroundColor(.charcoal)
