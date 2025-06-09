@@ -15,6 +15,8 @@ struct Personal_TrainerApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
+                .font(.custom("SFProDisplay-Regular", size: 17, relativeTo: .body))
+                .environment(\.dynamicTypeSize, .xxxLarge)     // accessibility friendly
         }
     }
 }

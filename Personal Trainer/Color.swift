@@ -7,6 +7,9 @@ extension Color {
     static let ivory      = Color(hex: "F4F1DE")
     static let charcoal   = Color(hex: "3D405B")
     static let slateGray  = Color(hex: "6D6875")
+    static let brandGreen    = Color(hex: "4CAF50")
+    static let progressBlue  = Color(hex: "2196F3")
+    static let accentOrange  = Color(hex: "FF9800")
 
     /// Initialize from a hex string, e.g. "E07A5F"
     init(hex: String) {

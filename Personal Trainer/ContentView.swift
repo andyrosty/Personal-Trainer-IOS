@@ -12,30 +12,13 @@ struct ContentView: View {
 
      var body: some View {
          TabView {
-             NavigationStack {
-                 HomeView()
-             }
-             .tabItem {
-                 Label("Home", systemImage: "house.fill")
-             }
-
-             NavigationStack {
-                 ResultsView()
-             }
-             .tabItem {
-                 Label("Results", systemImage: "list.bullet.clipboard.fill")
-             }
-
-             NavigationStack {
-                 SettingsView()
-             }
-             .tabItem {
-                 Label("Settings", systemImage: "gearshape.fill")
-             }
+             NavWrapper(HomeDashboardView(),  title: "Home",     icon: "house.fill")
+             NavWrapper(PlansCalendarView(),  title: "Plans",    icon: "calendar")
+             NavWrapper(ProgressOverview(),   title: "Progress", icon: "chart.bar.fill")
+             NavWrapper(CoachChatView(),      title: "AI Coach", icon: "message.fill")
+             NavWrapper(ProfileSettingsView(),title: "Profile",  icon: "person.crop.circle")
          }
-         .accentColor(.terracotta)
-         .font(.body)
-         .background(Color.ivory.edgesIgnoringSafeArea(.all))
+         .tint(.brandGreen)               // active tab colour
      }
 }
 
@@ -44,4 +27,12 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(PlanViewModel())
     }
+}
+
+@ViewBuilder
+private func NavWrapper<Content: View>(_ view: Content,
+                                       title: String,
+                                       icon: String) -> some View {
+    NavigationStack { view.navigationTitle(title) }
+        .tabItem { Label(title, systemImage: icon) }
 }
