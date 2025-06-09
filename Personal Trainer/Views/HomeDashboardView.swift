@@ -108,38 +108,20 @@ struct HomeDashboardView: View {
     }
 
     private var quickActions: some View {
-        HStack(spacing: 16) {
-            Button {
-                // TODO: weight logging action
-            } label: {
-                VStack {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.title)
-                    Text("Log Weight")
-                        .font(.caption)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.accentOrange.opacity(0.9))
-                .foregroundColor(.white)
-                .cornerRadius(12)
+        Button {
+            // TODO: workout logging action
+        } label: {
+            VStack {
+                Image(systemName: "figure.walk.circle.fill")
+                    .font(.title)
+                Text("Log Workout")
+                    .font(.caption)
             }
-
-            Button {
-                // TODO: navigate to notifications/ reminders
-            } label: {
-                VStack {
-                    Image(systemName: "bell.fill")
-                        .font(.title)
-                    Text("Reminders")
-                        .font(.caption)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.mustard)
-                .foregroundColor(.charcoal)
-                .cornerRadius(12)
-            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.accentOrange.opacity(0.9))
+            .foregroundColor(.white)
+            .cornerRadius(12)
         }
     }
 
