@@ -5,6 +5,7 @@ import SwiftUI
 struct PlansCalendarView: View {
     @EnvironmentObject var viewModel: PlanViewModel
     @State private var selectedDay: String = Date().dayName
+    @State private var quote: String = "Push yourself, because no one else is going to do it for you."
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -15,6 +16,8 @@ struct PlansCalendarView: View {
             Divider().padding(.vertical)
 
             detailsSection
+
+            quoteCard
 
             Spacer()
         }
@@ -83,6 +86,22 @@ struct PlansCalendarView: View {
                     .italic()
             }
         }
+    }
+
+    // MARK: – Quote card
+    private var quoteCard: some View {
+        HStack {
+            Image(systemName: "quote.opening")
+                .font(.title2)
+                .foregroundColor(.brandGreen)
+            Text(quote)
+                .font(.callout)
+                .italic()
+            Spacer()
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+        .shadow(radius: 4)
     }
 }
 

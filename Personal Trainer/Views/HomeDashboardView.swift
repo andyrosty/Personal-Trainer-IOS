@@ -15,13 +15,13 @@ struct HomeDashboardView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     todaysWorkoutCard
 
+                    startWorkoutCard
+
                     todaysMealsCard
 
                     progressCard
 
                     quickActions
-
-                    quoteCard
                 }
                 .padding()
             }
@@ -36,10 +36,18 @@ struct HomeDashboardView: View {
                 .font(.custom("BarlowCondensed-Thin", size: 24, relativeTo: .title3))
                 .foregroundColor(.charcoal)
 
-            Text(viewModel.result?.workoutPlan.first ?? "No workout generated yet – tap below to start")
-                .font(.body)
-                .foregroundColor(.slateGray)
-                .lineLimit(2)
+            if todayWorkouts.isEmpty {
+                Text("No workout generated yet – tap Start Workout below")
+                    .font(.body)
+                    .foregroundColor(.slateGray)
+            } else {
+                ForEach(todayWorkouts, id: \.self) { item in
+                    Text("• \(item)")
+                        .font(.body)
+                        .foregroundColor(.slateGray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
 
             Button {
                 // TODO: navigate to detailed workout view
@@ -55,6 +63,24 @@ struct HomeDashboardView: View {
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
+    }
+
+    private var startWorkoutCard: some View {
+        Button {
+            // TODO: navigate to detailed workout view
+        } label: {
+            VStack {
+                Image(systemName: "play.circle.fill")
+                    .font(.title)
+                Text("Start Workout")
+                    .font(.caption)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.brandGreen.opacity(0.9))
+            .foregroundColor(.ivory)
+            .cornerRadius(12)
+        }
     }
 
     private var todaysMealsCard: some View {
@@ -77,7 +103,7 @@ struct HomeDashboardView: View {
             .padding(.top, 8)
         } label: {
             HStack {
-                Text("Today's Meals")
+                Text("Meal Recommendations")
                     .font(.title3.bold())
                 Spacer()
                 Image(systemName: showMeals ? "chevron.up" : "chevron.down")
@@ -108,60 +134,49 @@ struct HomeDashboardView: View {
     }
 
     private var quickActions: some View {
-        HStack(spacing: 16) {
-            Button {
-                // TODO: weight logging action
-            } label: {
-                VStack {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.title)
-                    Text("Log Weight")
-                        .font(.caption)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.accentOrange.opacity(0.9))
-                .foregroundColor(.white)
-                .cornerRadius(12)
+        Button {
+            // TODO: workout logging action
+        } label: {
+            VStack {
+                Image(systemName: "figure.walk.circle.fill")
+                    .font(.title)
+                Text("Log Workout")
+                    .font(.caption)
             }
-
-            Button {
-                // TODO: navigate to notifications/ reminders
-            } label: {
-                VStack {
-                    Image(systemName: "bell.fill")
-                        .font(.title)
-                    Text("Reminders")
-                        .font(.caption)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.mustard)
-                .foregroundColor(.charcoal)
-                .cornerRadius(12)
-            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.accentOrange.opacity(0.9))
+            .foregroundColor(.white)
+            .cornerRadius(12)
         }
-    }
-
-    private var quoteCard: some View {
-        HStack {
-            Image(systemName: "quote.opening")
-                .font(.title2)
-                .foregroundColor(.brandGreen)
-            Text(quote)
-                .font(.callout)
-                .italic()
-            Spacer()
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
-        .shadow(radius: 4)
     }
 
     // Dummy progress until backend supplies data
     private var dummyProgress: Double {
         // For demo purposes assume 40% progress
         0.4
+    }
+
+    // Return workouts containing today's day name or fallback to first element
+    private var todayWorkouts: [String] {
+        guard let plan = viewModel.result?.workoutPlan else { return [] }
+        let dayName = Date().dayName.lowercased()
+        // Find any lines that mention today
+        let matches = plan.filter { $0.lowercased().contains(dayName) }
+        if !matches.isEmpty { return matches }
+        // Fallback: assume array is ordered Sun→Sat starting Sunday
+        let weekdayIndex = Calendar.current.component(.weekday, from: Date()) - 1 // Sunday = 1
+        if weekdayIndex < plan.count { return [plan[weekdayIndex]] }
+        return []
+    }
+}
+
+// Helper
+private extension Date {
+    var dayName: String {
+        let df = DateFormatter()
+        df.dateFormat = "EEEE"
+        return df.string(from: self)
     }
 }
 
