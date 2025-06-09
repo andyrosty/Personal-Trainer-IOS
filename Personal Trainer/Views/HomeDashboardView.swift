@@ -33,7 +33,7 @@ struct HomeDashboardView: View {
     private var todaysWorkoutCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Today's Workout")
-                .font(.title3.bold())
+                .font(.custom("BarlowCondensed-Thin", size: 24, relativeTo: .title3))
                 .foregroundColor(.charcoal)
 
             Text(viewModel.result?.workoutPlan.first ?? "No workout generated yet – tap below to start")
@@ -53,7 +53,7 @@ struct HomeDashboardView: View {
             }
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
     }
 
@@ -85,7 +85,7 @@ struct HomeDashboardView: View {
             .foregroundColor(.charcoal)
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
     }
 
@@ -103,7 +103,7 @@ struct HomeDashboardView: View {
                 .foregroundColor(.slateGray)
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
     }
 
@@ -154,7 +154,7 @@ struct HomeDashboardView: View {
             Spacer()
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
     }
 

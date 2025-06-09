@@ -49,7 +49,7 @@ struct CoachChatView: View {
             .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.secondarySystemBackground))
     }
 
     private func send() {
