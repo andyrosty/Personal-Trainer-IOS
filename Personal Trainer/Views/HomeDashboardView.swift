@@ -108,7 +108,7 @@ struct HomeDashboardView: View {
     private var statsCard: some View {
            VStack(alignment: .center, spacing: 8) {
                Text("Weight Goal")
-                   .font(.barlowCondensedHeadline())
+                   .font(.barlowCondensed(.medium, size: 18))
                    .foregroundColor(.charcoal)
                    .frame(height: 25)
                    .frame(maxWidth: .infinity, alignment: .center)
@@ -131,10 +131,10 @@ struct HomeDashboardView: View {
        private var estimatedDaysCard: some View {
            VStack(spacing: 8) {
                Text("Estimated Days")
-                   .font(.barlowCondensedHeadline())
+                   .font(.barlowCondensed(.medium, size: 18))
                    .foregroundColor(.charcoal)
                    .frame(height: 25)
-                   .frame(maxWidth: .infinity, alignment: .leading)
+                   .frame(maxWidth: .infinity, alignment: .center)
 
                Spacer()
 
