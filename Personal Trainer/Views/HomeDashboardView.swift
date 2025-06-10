@@ -32,152 +32,158 @@ struct HomeDashboardView: View {
                 .padding()
             }
             .background(Color.ivory.ignoresSafeArea())
+            // App is set to always use dark mode in Info.plist
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 
     // MARK: – Components
     private var todaysWorkoutCard: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             Text("Today's Workout")
                 .font(.barlowCondensed(.semiBold, size: 24))
-                .foregroundColor(.charcoal)
+                .foregroundColor(.primaryText)
 
             if todayWorkouts.isEmpty {
                 Text("Log in to generate workout")
                     .font(.barlowCondensedBody())
-                    .foregroundColor(.slateGray)
+                    .foregroundColor(.secondaryText)
             } else {
                 ForEach(todayWorkouts, id: \.self) { item in
                     Text("• \(item)")
                         .font(.barlowCondensedBody())
-                        .foregroundColor(.slateGray)
+                        .foregroundColor(.secondaryText)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
-        .shadow(radius: 4)
+        .padding(16)
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color.cardBackground))
+        .shadow(color: Color.shadowColor, radius: 5, x: 0, y: 2)
     }
 
     private var startWorkoutCard: some View {
         Button {
             // TODO: navigate to detailed workout view
         } label: {
-            VStack {
+            HStack(spacing: 12) {
                 Image(systemName: "play.circle.fill")
-                    .font(.title)
+                    .font(.system(size: 24, weight: .semibold))
                 Text("Start Workout")
-                    .font(.barlowCondensed(.medium, size: 16))
+                    .font(.barlowCondensed(.semiBold, size: 18))
             }
             .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.brandGreen.opacity(0.9))
-            .foregroundColor(.ivory)
-            .cornerRadius(12)
+            .padding(.vertical, 16)
+            .background(Color.brandGreen)
+            .foregroundColor(.buttonText)
+            .cornerRadius(16)
+            .shadow(color: Color.shadowColor, radius: 4, x: 0, y: 2)
         }
     }
 
     private var todaysMealsCard: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("Meal Recommendations")
                 .font(.barlowCondensedHeadline())
-                .foregroundColor(.charcoal)
+                .foregroundColor(.primaryText)
 
             if let todayMeals = viewModel.weeklyMeals.first(where: { $0.day == Date().dayName.lowercased() })?.meals, !todayMeals.isEmpty {
                 Text(todayMeals)
                     .font(.barlowCondensedSubheadline())
-                    .foregroundColor(.slateGray)
+                    .foregroundColor(.secondaryText)
+                    .lineSpacing(4)
             } else {
                 Text("Log in to generate meals")
                     .font(.barlowCondensedSubheadline())
-                    .foregroundColor(.slateGray)
+                    .foregroundColor(.secondaryText)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
-        .shadow(radius: 4)
+        .padding(16)
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color.cardBackground))
+        .shadow(color: Color.shadowColor, radius: 5, x: 0, y: 2)
     }
 
     private var progressCard: some View {
-        VStack(alignment: .center, spacing: 8) {
-            Text("Weight Goal")
-                .font(.barlowCondensedHeadline())
-                .foregroundColor(.charcoal)
-                .frame(height: 25)
-                .frame(maxWidth: .infinity, alignment: .center)
+           VStack(alignment: .center, spacing: 8) {
+               Text("Weight Goal")
+                   .font(.barlowCondensedHeadline())
+                   .foregroundColor(.charcoal)
+                   .frame(height: 25)
+                   .frame(maxWidth: .infinity, alignment: .center)
 
-            CircularProgressBar(progress: dummyProgress)
-                .frame(width: 100, height: 100)
-                .frame(maxWidth: .infinity, alignment: .center)
+               CircularProgressBar(progress: dummyProgress)
+                   .frame(width: 100, height: 100)
+                   .frame(maxWidth: .infinity, alignment: .center)
 
-            Text("\(Int(dummyProgress * 100))% reached")
-                .font(.barlowCondensedCaption())
-                .foregroundColor(.slateGray)
-                .frame(maxWidth: .infinity, alignment: .center)
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
-        .shadow(radius: 4)
-        .frame(height: 190)
-    }
+               Text("\(Int(dummyProgress * 100))% reached")
+                   .font(.barlowCondensedCaption())
+                   .foregroundColor(.slateGray)
+                   .frame(maxWidth: .infinity, alignment: .center)
+           }
+           .padding()
+           .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+           .shadow(radius: 4)
+           .frame(height: 190)
+       }
 
-    private var estimatedDaysCard: some View {
-        VStack(spacing: 8) {
-            Text("Estimated Days")
-                .font(.barlowCondensedHeadline())
-                .foregroundColor(.charcoal)
-                .frame(height: 25)
-                .frame(maxWidth: .infinity, alignment: .leading)
+       private var estimatedDaysCard: some View {
+           VStack(spacing: 8) {
+               Text("Estimated Days")
+                   .font(.barlowCondensedHeadline())
+                   .foregroundColor(.charcoal)
+                   .frame(height: 25)
+                   .frame(maxWidth: .infinity, alignment: .leading)
 
-            Spacer()
+               Spacer()
 
-            CircularNumberView(number: estimatedDaysUntilGoal)
-                .frame(maxWidth: .infinity, alignment: .center)
+               CircularNumberView(number: estimatedDaysUntilGoal)
+                   .frame(maxWidth: .infinity, alignment: .center)
 
-            Spacer()
+               Spacer()
 
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
-        .shadow(radius: 4)
-        .frame(height: 190)
-    }
+           }
+           .padding()
+           .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+           .shadow(radius: 4)
+           .frame(height: 190)
+       }
 
     private var quickActions: some View {
         HStack(spacing: 16) {
             Button {
                 // TODO: workout logging action
             } label: {
-                VStack {
+                VStack(spacing: 8) {
                     Image(systemName: "figure.strengthtraining.traditional")
-                        .font(.title)
+                        .font(.system(size: 24, weight: .semibold))
                     Text("Log Workout")
-                        .font(.barlowCondensed(.medium, size: 16))
+                        .font(.barlowCondensed(.semiBold, size: 16))
                 }
                 .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.accentOrange.opacity(0.9))
-                .foregroundColor(.white)
-                .cornerRadius(12)
+                .padding(.vertical, 16)
+                .background(Color.accentOrange)
+                .foregroundColor(.buttonText)
+                .cornerRadius(16)
+                .shadow(color: Color.shadowColor, radius: 4, x: 0, y: 2)
             }
 
             Button {
                 // TODO: weight logging action
             } label: {
-                VStack {
+                VStack(spacing: 8) {
                     Image(systemName: "scalemass.fill")
-                        .font(.title)
+                        .font(.system(size: 24, weight: .semibold))
                     Text("Log Weight")
-                        .font(.barlowCondensed(.medium, size: 16))
+                        .font(.barlowCondensed(.semiBold, size: 16))
                 }
                 .frame(maxWidth: .infinity)
-                .padding()
+                .padding(.vertical, 16)
                 .background(Color.brandGreen)
-                .foregroundColor(.ivory)
-                .cornerRadius(12)
+                .foregroundColor(.buttonText)
+                .cornerRadius(16)
+                .shadow(color: Color.shadowColor, radius: 4, x: 0, y: 2)
             }
         }
     }
@@ -222,16 +228,17 @@ private struct CircularProgressBar: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.slateGray.opacity(0.3), lineWidth: 8)
+                .stroke(Color.secondaryText.opacity(0.2), lineWidth: 10)
 
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(Color.progressBlue, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                .stroke(Color.progressBlue, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .rotationEffect(.degrees(-90))
+                .animation(.easeInOut, value: progress)
 
             Text("\(Int(progress * 100))%")
-                .font(.barlowCondensedCaption())
-                .foregroundColor(.charcoal)
+                .font(.barlowCondensed(.semiBold, size: 18))
+                .foregroundColor(.primaryText)
         }
     }
 }
@@ -241,14 +248,14 @@ private struct CircularNumberView: View {
     let number: Int
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 4) {
             Text("\(number)")
-                .font(.barlowCondensed(.bold, size: 40))
+                .font(.barlowCondensed(.bold, size: 44))
                 .foregroundColor(.terracotta)
 
             Text("remaining")
-                .font(.barlowCondensed(.light, size: 12))
-                .foregroundColor(.slateGray)
+                .font(.barlowCondensed(.medium, size: 14))
+                .foregroundColor(.secondaryText)
         }
     }
 }
