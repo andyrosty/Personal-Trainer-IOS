@@ -1,12 +1,15 @@
 import SwiftUI
 
 extension Color {
-    static let terracotta = Color(hex: "E07A5F")
-    static let mustard    = Color(hex: "F2CC8F")
-    static let olive      = Color(hex: "81B29A")
-    static let ivory      = Color(hex: "F4F1DE")
-    static let charcoal   = Color(hex: "3D405B")
-    static let slateGray  = Color(hex: "6D6875")
+    static let terracotta = Color(.systemRed)
+    static let mustard    = Color(.systemYellow)
+    static let olive      = Color(.systemGreen)
+    static let ivory      = Color(.systemBackground)
+    static let charcoal   = Color(.label)
+    static let slateGray  = Color(.secondaryLabel)
+    static let brandGreen    = Color(.systemGreen)
+    static let progressBlue  = Color(.systemGreen)
+    static let accentOrange  = Color(.systemOrange)
 
     /// Initialize from a hex string, e.g. "E07A5F"
     init(hex: String) {
