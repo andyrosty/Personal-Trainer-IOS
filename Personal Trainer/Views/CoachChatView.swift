@@ -37,6 +37,7 @@ struct CoachChatView: View {
     private var inputBar: some View {
         HStack {
             TextField("Type a question…", text: $inputText)
+                .font(.barlowCondensedBody())
                 .textFieldStyle(.roundedBorder)
                 .submitLabel(.send)
                 .onSubmit(send)
@@ -80,6 +81,7 @@ private struct Bubble: View {
             if isUser { Spacer() }
 
             Text(message.text)
+                .font(.barlowCondensedBody())
                 .padding(10)
                 .background(isUser ? Color.brandGreen : Color.mustard.opacity(0.3))
                 .foregroundColor(isUser ? .white : .charcoal)

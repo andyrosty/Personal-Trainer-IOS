@@ -39,17 +39,17 @@ struct HomeDashboardView: View {
     private var todaysWorkoutCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Today's Workout")
-                .font(.custom("BarlowCondensed-Thin", size: 24, relativeTo: .title3))
+                .font(.barlowCondensed(.semiBold, size: 24))
                 .foregroundColor(.charcoal)
 
             if todayWorkouts.isEmpty {
                 Text("Log in to generate workout")
-                    .font(.body)
+                    .font(.barlowCondensedBody())
                     .foregroundColor(.slateGray)
             } else {
                 ForEach(todayWorkouts, id: \.self) { item in
                     Text("• \(item)")
-                        .font(.body)
+                        .font(.barlowCondensedBody())
                         .foregroundColor(.slateGray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -69,7 +69,7 @@ struct HomeDashboardView: View {
                 Image(systemName: "play.circle.fill")
                     .font(.title)
                 Text("Start Workout")
-                    .font(.caption)
+                    .font(.barlowCondensed(.medium, size: 16))
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -82,16 +82,16 @@ struct HomeDashboardView: View {
     private var todaysMealsCard: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Meal Recommendations")
-                .font(.title3.bold())
+                .font(.barlowCondensedHeadline())
                 .foregroundColor(.charcoal)
 
             if let todayMeals = viewModel.weeklyMeals.first(where: { $0.day == Date().dayName.lowercased() })?.meals, !todayMeals.isEmpty {
                 Text(todayMeals)
-                    .font(.subheadline)
+                    .font(.barlowCondensedSubheadline())
                     .foregroundColor(.slateGray)
             } else {
                 Text("Log in to generate meals")
-                    .font(.subheadline)
+                    .font(.barlowCondensedSubheadline())
                     .foregroundColor(.slateGray)
             }
         }
@@ -102,18 +102,21 @@ struct HomeDashboardView: View {
     }
 
     private var progressCard: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
             Text("Weight Goal")
-                .font(.title3.bold())
+                .font(.barlowCondensedHeadline())
                 .foregroundColor(.charcoal)
                 .frame(height: 25)
+                .frame(maxWidth: .infinity, alignment: .center)
 
             CircularProgressBar(progress: dummyProgress)
                 .frame(width: 100, height: 100)
+                .frame(maxWidth: .infinity, alignment: .center)
 
             Text("\(Int(dummyProgress * 100))% reached")
-                .font(.footnote)
+                .font(.barlowCondensedCaption())
                 .foregroundColor(.slateGray)
+                .frame(maxWidth: .infinity, alignment: .center)
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
@@ -123,8 +126,8 @@ struct HomeDashboardView: View {
 
     private var estimatedDaysCard: some View {
         VStack(spacing: 8) {
-            Text("Estimated Days Until Goal")
-                .font(.title3.bold())
+            Text("Estimated Days")
+                .font(.barlowCondensedHeadline())
                 .foregroundColor(.charcoal)
                 .frame(height: 25)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -135,7 +138,7 @@ struct HomeDashboardView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Spacer()
-            
+
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
@@ -152,7 +155,7 @@ struct HomeDashboardView: View {
                     Image(systemName: "figure.strengthtraining.traditional")
                         .font(.title)
                     Text("Log Workout")
-                        .font(.caption)
+                        .font(.barlowCondensed(.medium, size: 16))
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -168,7 +171,7 @@ struct HomeDashboardView: View {
                     Image(systemName: "scalemass.fill")
                         .font(.title)
                     Text("Log Weight")
-                        .font(.caption)
+                        .font(.barlowCondensed(.medium, size: 16))
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -227,7 +230,7 @@ private struct CircularProgressBar: View {
                 .rotationEffect(.degrees(-90))
 
             Text("\(Int(progress * 100))%")
-                .font(.caption)
+                .font(.barlowCondensedCaption())
                 .foregroundColor(.charcoal)
         }
     }
@@ -238,13 +241,19 @@ private struct CircularNumberView: View {
     let number: Int
 
     var body: some View {
-        Text("\(number)")
-            .font(.system(size: 40, weight: .bold))
-            .foregroundColor(.terracotta)
+        VStack(spacing: 2) {
+            Text("\(number)")
+                .font(.barlowCondensed(.bold, size: 40))
+                .foregroundColor(.terracotta)
+
+            Text("remaining")
+                .font(.barlowCondensed(.light, size: 12))
+                .foregroundColor(.slateGray)
+        }
     }
 }
 
 #Preview {
     HomeDashboardView()
         .environmentObject(PlanViewModel())
-} 
+}
