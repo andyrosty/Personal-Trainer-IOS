@@ -17,8 +17,6 @@ struct HomeDashboardView: View {
 
                     startWorkoutCard
 
-                    todaysMealsCard
-
                     HStack(spacing: 16) {
                         statsCard
                             .frame(maxWidth: .infinity)
@@ -26,6 +24,8 @@ struct HomeDashboardView: View {
                         estimatedDaysCard
                             .frame(maxWidth: .infinity)
                     }
+
+                    todaysMealsCard
 
                     quickActions
                 }
@@ -130,7 +130,7 @@ struct HomeDashboardView: View {
 
        private var estimatedDaysCard: some View {
            VStack(spacing: 8) {
-               Text("Estimated Days")
+               Text("Completion")
                    .font(.barlowCondensed(.medium, size: 18))
                    .foregroundColor(.charcoal)
                    .frame(height: 25)
@@ -253,7 +253,7 @@ private struct CircularNumberView: View {
                 .font(.barlowCondensed(.bold, size: 44))
                 .foregroundColor(.terracotta)
 
-            Text("remaining")
+                            Text("days estimated")
                 .font(.barlowCondensed(.medium, size: 14))
                 .foregroundColor(.secondaryText)
         }
