@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Dashboard landing page shown in the first tab. It surfaces the most important actions for **today**
-/// (start workout, view meals, track progress, etc.).
+/// (start workout, view meals, track stats, etc.).
 /// The concrete business logic will be wired in later – for now this acts as a visual placeholder so
 /// that navigation flow is complete and designers/devs can iterate quickly.
 struct HomeDashboardView: View {
@@ -20,7 +20,7 @@ struct HomeDashboardView: View {
                     todaysMealsCard
 
                     HStack(spacing: 16) {
-                        progressCard
+                        statsCard
                             .frame(maxWidth: .infinity)
 
                         estimatedDaysCard
@@ -105,7 +105,7 @@ struct HomeDashboardView: View {
         .shadow(color: Color.shadowColor, radius: 5, x: 0, y: 2)
     }
 
-    private var progressCard: some View {
+    private var statsCard: some View {
            VStack(alignment: .center, spacing: 8) {
                Text("Weight Goal")
                    .font(.barlowCondensedHeadline())
@@ -113,11 +113,11 @@ struct HomeDashboardView: View {
                    .frame(height: 25)
                    .frame(maxWidth: .infinity, alignment: .center)
 
-               CircularProgressBar(progress: dummyProgress)
+               CircularProgressBar(progress: dummyStats)
                    .frame(width: 100, height: 100)
                    .frame(maxWidth: .infinity, alignment: .center)
 
-               Text("\(Int(dummyProgress * 100))% reached")
+               Text("\(Int(dummyStats * 100))% reached")
                    .font(.barlowCondensedCaption())
                    .foregroundColor(.slateGray)
                    .frame(maxWidth: .infinity, alignment: .center)
@@ -188,9 +188,9 @@ struct HomeDashboardView: View {
         }
     }
 
-    // Dummy progress until backend supplies data
-    private var dummyProgress: Double {
-        // For demo purposes assume 40% progress
+    // Dummy stats until backend supplies data
+    private var dummyStats: Double {
+        // For demo purposes assume 40% stats
         0.4
     }
 
@@ -232,7 +232,7 @@ private struct CircularProgressBar: View {
 
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(Color.progressBlue, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                .stroke(Color.statsBlue, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut, value: progress)
 

@@ -11,7 +11,7 @@ extension Color {
 
     // Brand colors
     static let brandGreen    = Color(.systemGreen)
-    static let progressBlue  = Color(.systemBlue)
+    static let statsBlue  = Color(.systemBlue)
     static let accentOrange  = Color(.systemOrange)
 
     // Semantic colors for dark mode

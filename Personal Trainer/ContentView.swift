@@ -14,7 +14,7 @@ struct ContentView: View {
          TabView {
              NavWrapper(HomeDashboardView(),  title: "Home",     icon: "house.fill")
              NavWrapper(PlansCalendarView(),  title: "Plans",    icon: "calendar")
-             NavWrapper(ProgressOverview(),   title: "Progress", icon: "chart.bar.fill")
+             NavWrapper(StatsOverview(),   title: "Stats", icon: "chart.bar.fill")
              NavWrapper(CoachChatView(),      title: "AI Coach", icon: "message.fill")
              NavWrapper(ProfileSettingsView(),title: "Profile",  icon: "person.crop.circle")
          }

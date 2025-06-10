@@ -7,6 +7,7 @@ struct CoachChatView: View {
         ChatMessage(role: .assistant, text: "Hello! I'm your AI coach. How can I help you today?")
     ]
     @State private var inputText: String = ""
+    @FocusState private var isInputFocused: Bool
 
     var body: some View {
         VStack(spacing: 0) {
@@ -27,6 +28,9 @@ struct CoachChatView: View {
                             proxy.scrollTo(last.id, anchor: .bottom)
                         }
                     }
+                }
+                .onTapGesture {
+                    isInputFocused = false
                 }
             }
 
@@ -51,6 +55,15 @@ struct CoachChatView: View {
                 .cornerRadius(16)
                 .submitLabel(.send)
                 .onSubmit(send)
+                .focused($isInputFocused)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button("Done") {
+                            isInputFocused = false
+                        }
+                    }
+                }
 
             Button(action: send) {
                 Image(systemName: "arrow.up.circle.fill")
@@ -75,6 +88,7 @@ struct CoachChatView: View {
 
         messages.append(ChatMessage(role: .user, text: trimmed))
         inputText = ""
+        isInputFocused = false  // Dismiss keyboard after sending
 
         // Simulate assistant reply
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -96,11 +110,6 @@ private struct Bubble: View {
         HStack(alignment: .bottom, spacing: 8) {
             if isUser { 
                 Spacer() 
-            } else {
-                Image(systemName: "figure.mind.and.body")
-                    .font(.system(size: 24))
-                    .foregroundColor(.brandGreen)
-                    .frame(width: 32, height: 32)
             }
 
             Text(message.text)
@@ -113,12 +122,7 @@ private struct Bubble: View {
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.75, alignment: isUser ? .trailing : .leading)
                 .shadow(color: Color.shadowColor, radius: 2, x: 0, y: 1)
 
-            if isUser { 
-                Image(systemName: "person.circle.fill")
-                    .font(.system(size: 24))
-                    .foregroundColor(.accentOrange)
-                    .frame(width: 32, height: 32)
-            } else {
+            if !isUser { 
                 Spacer() 
             }
         }
