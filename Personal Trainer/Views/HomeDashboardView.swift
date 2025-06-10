@@ -48,18 +48,8 @@ struct HomeDashboardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-
-            Button {
-                // TODO: navigate to detailed workout view
-            } label: {
-                Label("Start Workout", systemImage: "play.fill")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.brandGreen)
-                    .foregroundColor(.ivory)
-                    .cornerRadius(10)
-            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
@@ -134,20 +124,38 @@ struct HomeDashboardView: View {
     }
 
     private var quickActions: some View {
-        Button {
-            // TODO: workout logging action
-        } label: {
-            VStack {
-                Image(systemName: "figure.walk.circle.fill")
-                    .font(.title)
-                Text("Log Workout")
-                    .font(.caption)
+        HStack(spacing: 16) {
+            Button {
+                // TODO: workout logging action
+            } label: {
+                VStack {
+                    Image(systemName: "figure.strengthtraining.traditional")
+                        .font(.title)
+                    Text("Log Workout")
+                        .font(.caption)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.accentOrange.opacity(0.9))
+                .foregroundColor(.white)
+                .cornerRadius(12)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.accentOrange.opacity(0.9))
-            .foregroundColor(.white)
-            .cornerRadius(12)
+
+            Button {
+                // TODO: weight logging action
+            } label: {
+                VStack {
+                    Image(systemName: "scalemass.fill")
+                        .font(.title)
+                    Text("Log Weight")
+                        .font(.caption)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.mustard)
+                .foregroundColor(.charcoal)
+                .cornerRadius(12)
+            }
         }
     }
 
