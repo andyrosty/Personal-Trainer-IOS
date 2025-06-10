@@ -19,7 +19,13 @@ struct HomeDashboardView: View {
 
                     todaysMealsCard
 
-                    progressCard
+                    HStack(spacing: 16) {
+                        progressCard
+                            .frame(maxWidth: .infinity)
+
+                        estimatedDaysCard
+                            .frame(maxWidth: .infinity)
+                    }
 
                     quickActions
                 }
@@ -37,7 +43,7 @@ struct HomeDashboardView: View {
                 .foregroundColor(.charcoal)
 
             if todayWorkouts.isEmpty {
-                Text("No workout generated yet – tap Start Workout below")
+                Text("Log in to generate workout")
                     .font(.body)
                     .foregroundColor(.slateGray)
             } else {
@@ -74,32 +80,22 @@ struct HomeDashboardView: View {
     }
 
     private var todaysMealsCard: some View {
-        DisclosureGroup(isExpanded: $showMeals) {
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(viewModel.weeklyMeals) { daily in
-                    HStack {
-                        Text(daily.day.capitalized)
-                            .font(.subheadline.bold())
-                            .foregroundColor(.charcoal)
-                        Spacer()
-                        Text(daily.meals.isEmpty ? "–" : daily.meals)
-                            .font(.subheadline)
-                            .foregroundColor(.slateGray)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    Divider()
-                }
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Meal Recommendations")
+                .font(.title3.bold())
+                .foregroundColor(.charcoal)
+
+            if let todayMeals = viewModel.weeklyMeals.first(where: { $0.day == Date().dayName.lowercased() })?.meals, !todayMeals.isEmpty {
+                Text(todayMeals)
+                    .font(.subheadline)
+                    .foregroundColor(.slateGray)
+            } else {
+                Text("Log in to generate meals")
+                    .font(.subheadline)
+                    .foregroundColor(.slateGray)
             }
-            .padding(.top, 8)
-        } label: {
-            HStack {
-                Text("Meal Recommendations")
-                    .font(.title3.bold())
-                Spacer()
-                Image(systemName: showMeals ? "chevron.up" : "chevron.down")
-            }
-            .foregroundColor(.charcoal)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
@@ -107,20 +103,44 @@ struct HomeDashboardView: View {
 
     private var progressCard: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Weight Goal Progress")
+            Text("Weight Goal")
                 .font(.title3.bold())
                 .foregroundColor(.charcoal)
+                .frame(height: 25)
 
-            ProgressView(value: dummyProgress)
-                .tint(Color.progressBlue)
+            CircularProgressBar(progress: dummyProgress)
+                .frame(width: 100, height: 100)
 
-            Text("\(Int(dummyProgress * 100))% of goal reached")
+            Text("\(Int(dummyProgress * 100))% reached")
                 .font(.footnote)
                 .foregroundColor(.slateGray)
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
         .shadow(radius: 4)
+        .frame(height: 190)
+    }
+
+    private var estimatedDaysCard: some View {
+        VStack(spacing: 8) {
+            Text("Estimated Days Until Goal")
+                .font(.title3.bold())
+                .foregroundColor(.charcoal)
+                .frame(height: 25)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Spacer()
+
+            CircularNumberView(number: estimatedDaysUntilGoal)
+                .frame(maxWidth: .infinity, alignment: .center)
+
+            Spacer()
+            
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+        .shadow(radius: 4)
+        .frame(height: 190)
     }
 
     private var quickActions: some View {
@@ -152,8 +172,8 @@ struct HomeDashboardView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.mustard)
-                .foregroundColor(.charcoal)
+                .background(Color.brandGreen)
+                .foregroundColor(.ivory)
                 .cornerRadius(12)
             }
         }
@@ -177,6 +197,10 @@ struct HomeDashboardView: View {
         if weekdayIndex < plan.count { return [plan[weekdayIndex]] }
         return []
     }
+
+    private var estimatedDaysUntilGoal: Int {
+        viewModel.result?.estimateDays ?? 14
+    }
 }
 
 // Helper
@@ -185,6 +209,38 @@ private extension Date {
         let df = DateFormatter()
         df.dateFormat = "EEEE"
         return df.string(from: self)
+    }
+}
+
+// MARK: – Circular progress
+private struct CircularProgressBar: View {
+    var progress: Double   // 0…1
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.slateGray.opacity(0.3), lineWidth: 8)
+
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(Color.progressBlue, style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+
+            Text("\(Int(progress * 100))%")
+                .font(.caption)
+                .foregroundColor(.charcoal)
+        }
+    }
+}
+
+// Simple view with a central number, used for estimated days card
+private struct CircularNumberView: View {
+    let number: Int
+
+    var body: some View {
+        Text("\(number)")
+            .font(.system(size: 40, weight: .bold))
+            .foregroundColor(.terracotta)
     }
 }
 
