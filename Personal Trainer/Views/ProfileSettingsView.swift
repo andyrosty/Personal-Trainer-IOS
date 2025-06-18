@@ -87,8 +87,7 @@ struct ProfileSettingsView: View {
                             }
                         }
                     }
-                    .scrollDisabled(true)
-                    .frame(height: 600) // Fixed height for the form
+                    .frame(minHeight: 600) // Minimum height for the form
                 }
             }
         }

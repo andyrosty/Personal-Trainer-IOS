@@ -24,8 +24,21 @@
     ```bash
     open "Personal Trainer.xcodeproj"
     ```
- 3. (Optional) Configure the API endpoint:
-    In `NetworkManager.swift`, update the `baseURL` constant to point to your backend.
+ 3. Configure the FastAPI backend endpoint and AWS credentials:
+    - The app is configured to use a FastAPI backend hosted on AWS for fitness plan generation.
+    - The app uses the endpoint `https://api.example.com/v1/fitness-plan` for generating fitness and diet plans.
+    - You need to provide AWS credentials to authenticate with the API.
+    - In your app's initialization code (e.g., in `AppDelegate.swift` or `SceneDelegate.swift`), add:
+      ```swift
+      // Configure AWS credentials
+      let credentials = AWSCredentials(
+          accessKey: "YOUR_AWS_ACCESS_KEY",
+          secretKey: "YOUR_AWS_SECRET_KEY",
+          region: "YOUR_AWS_REGION"
+      )
+      NetworkManager.shared.configure(with: credentials)
+      ```
+    - **Security Note**: Never hardcode AWS credentials in your app. Use a secure storage solution or a service like AWS Cognito to manage authentication securely. The example above is for demonstration purposes only.
  4. Build and run the app on the simulator or a device.
 
  ## Usage
