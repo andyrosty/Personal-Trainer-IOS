@@ -61,6 +61,25 @@
  └── README.md                   # Project README
  ```
 
+ ## Screenshots
+
+ Here are some screenshots of the Personal Trainer app:
+
+ ![Home Dashboard](Personal%20Trainer/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-06-18%20at%2018.41.48.png)
+ *Home Dashboard - Enter your fitness details and preferences*
+
+ ![Workout Plan](Personal%20Trainer/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-06-18%20at%2018.41.51.png)
+ *Personalized Workout Plan*
+
+ ![Diet Plan](Personal%20Trainer/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-06-18%20at%2018.41.54.png)
+ *Customized Diet Recommendations*
+
+ ![Coach Chat](Personal%20Trainer/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-06-18%20at%2018.41.57.png)
+ *Coach Chat - Get advice from your virtual fitness coach*
+
+ ![Profile Settings](Personal%20Trainer/Screenshots/Simulator%20Screenshot%20-%20iPhone%2016%20-%202025-06-18%20at%2018.42.00.png)
+ *Profile Settings - Customize your app experience*
+
  ## Contributing
 
  Contributions are welcome! Feel free to open issues or submit pull requests.
